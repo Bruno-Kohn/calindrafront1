@@ -17,6 +17,17 @@ export default function Home() {
     req.catch((error) => console.log(error));
   }
 
+  function sendNewRequest(product) {
+    const req = axios.get(
+      `https://mystique-v2-americanas.juno.b2w.io/autocomplete?content=${product}&source=nanook`
+    );
+    req.then((resp) => {
+      setInfos(resp.data);
+      console.log(resp.data);
+    });
+    req.catch((error) => setInfos(error));
+  }
+
   return (
     <Container>
       <SearchBar
@@ -36,9 +47,25 @@ export default function Home() {
             </ProductCard>
           ))
         ) : (
-          <h1>Please, type a valid CEP code</h1>
+          <h1>Product not found. Please try again 🙃</h1>
         )}
       </Card>
+      {infos.suggestions ? (
+        <>
+          <SuggestionBox>
+            <h2>Suggestions</h2>
+            {infos.suggestions
+              ? infos.suggestions.map((i) => (
+                  <div onClick={() => sendNewRequest(i.term)}>
+                    <h1>{i.term}</h1>
+                  </div>
+                ))
+              : ''}
+          </SuggestionBox>
+        </>
+      ) : (
+        ''
+      )}
     </Container>
   );
 }
@@ -104,5 +131,40 @@ const ProductCard = styled.div`
   h1 {
     margin: 10px;
     font-size: 18px;
+  }
+`;
+
+const SuggestionBox = styled.div`
+  width: auto;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  border: none;
+  background: #8e82fc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+  }
+
+  h1 {
+    :hover {
+      background: #b8b2f0;
+      border-radius: 5px;
+    }
+  }
+
+  div {
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 2px;
   }
 `;
