@@ -34,6 +34,6 @@ npm i
 npm start
 ```
 4. Or try it out at vercel
-```bash
-npm start
-```
+
+calindrafront1.vercel.app
+
