@@ -1,6 +1,6 @@
 # Search Product
 
-A simple way to search for the availability of the most desired products on the market..
+A simple way to search for the availability of the most desired products on the market.
 
 
 ## About
